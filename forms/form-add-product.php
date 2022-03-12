@@ -2,7 +2,6 @@
     require_once '../includes/header.php';
 ?>
 
-<h1 class="mb-3">Cadastrar produto</h1>
 <form action="../database/products/create.php" method="POST">
     <input 
         type="hidden"

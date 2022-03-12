@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 require_once 'crudProducts.php';
 
 class Products extends Connection implements crudProducts {
@@ -49,10 +49,27 @@ class Products extends Connection implements crudProducts {
 
     // Métodos da interface
     public function create() {
-        echo $this->getName();
-        echo $this->getQuantity();
-        echo $this->getPrice();
-        echo $this->getImage();
+        $name = $this->getName();
+        $quantity = $this->getQuantity();
+        $price = $this->getPrice();
+        $image = $this->getImage();
+
+        $connection = $this->connect();
+
+        $sql = "insert into products values(default, :name, :quantity, :price, :image)";
+        $stmt = $connection->prepare($sql);
+        $stmt->bindParam(':name', $name);
+        $stmt->bindParam(':quantity', $quantity);
+        $stmt->bindParam(':price', $price);
+        $stmt->bindParam(':image', $image);
+
+        if($stmt->execute()) {
+            $_SESSION['success'] = "Cadastrado com sucesso!";
+            $destiny = header('Location: ../../public/products.php');
+        } else {
+            $_SESSION['error'] = "Ocorreu um erro no cadastro do produto!";
+            $destiny = header('Location: ../../public/products.php');
+        }
 
     }
     public function read() {
