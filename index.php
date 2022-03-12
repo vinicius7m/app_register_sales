@@ -1,0 +1,1 @@
+<?php $destiny = header("Location:public/home.php"); ?>
