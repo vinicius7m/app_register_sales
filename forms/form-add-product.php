@@ -2,12 +2,7 @@
     require_once '../includes/header.php';
 ?>
 
-<form action="../database/products/create.php" method="POST">
-    <input 
-        type="hidden"
-        name="id"
-        id="id"
-    >
+<form action="../database/products/create.php" method="POST" enctype="multipart/form-data">
     <input 
         type="text" 
         class="form-control mb-3" 
@@ -40,7 +35,7 @@
         name="image" 
         id="image" 
         placeholder="Imagem"
-        accept="image/png, image/jpeg"
+        accept="image/png, image/jpeg, image/gif"
     >
 
     <input 

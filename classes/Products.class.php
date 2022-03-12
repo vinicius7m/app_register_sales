@@ -47,12 +47,20 @@ class Products extends Connection implements crudProducts {
         $this->setImage($image);
     }
 
+    public function upload($image) {
+        
+    }
+
     // Métodos da interface
     public function create() {
         $name = $this->getName();
         $quantity = $this->getQuantity();
         $price = $this->getPrice();
         $image = $this->getImage();
+
+        if($image != null) {
+            $this->upload($image);
+        }
 
         $connection = $this->connect();
 
