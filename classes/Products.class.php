@@ -47,7 +47,32 @@ class Products extends Connection implements crudProducts {
         $this->setImage($image);
     }
 
-    public function upload($image) {
+    public function upload($image) {            
+        if($image['error']) {
+            //$_SESSION['error'] = "Falha ao enviar o arquivo";
+            die("Falha ao enviar o arquivo");
+            //$destiny = header('Location: ../../public/products.php');
+            
+        }
+    
+        if($image['size'] > 2097152) {
+            //$_SESSION['error'] = "Erro no upload! Arquivo grande (MAX: 2 MB)";
+            die("Erro no upload! Arquivo grande (MAX: 2 MB)");
+            //$destiny = header('Location: ../../public/products.php');
+
+        }
+        $folder = "../../assets/images/upload/";
+        $imageName = $image['name'];
+        $newImageName = uniqid();
+        $extension = strtolower(pathinfo($imageName, PATHINFO_EXTENSION));
+    
+        if($extension != "jpg" && $extension != "png"){
+            die("Tipo de arquivo não aceito");
+        }
+    
+        move_uploaded_file($image['tmp_name'], $folder . $newImageName . ".". $extension);
+        $image = $newImageName . "." . $extension;
+        return $image;
         
     }
 
@@ -58,8 +83,10 @@ class Products extends Connection implements crudProducts {
         $price = $this->getPrice();
         $image = $this->getImage();
 
-        if($image != null) {
-            $this->upload($image);
+        if($image['name'] != "") {
+            $image = $this->upload($image);
+        } else {
+            $image = "";
         }
 
         $connection = $this->connect();
