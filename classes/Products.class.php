@@ -47,6 +47,24 @@ class Products extends Connection implements crudProducts {
         $this->setImage($image);
     }
 
+    public function tableData($id) {
+        $connection = $this->connect();
+
+        $this->setId($id);
+        $_id = $this->getId();
+
+        $sql = "select * from products where id = :id";
+        $stmt = $connection->prepare($sql);
+        $stmt->bindParam(':id', $_id);
+        $stmt->execute();
+
+        $result = $stmt->fetchAll();
+
+        foreach($result as $values) {
+            require_once '../forms/form-edit-product.php';
+        }
+    }
+
     public function upload($image) {            
         if($image['error']) {
             //$_SESSION['error'] = "Falha ao enviar o arquivo";
@@ -100,18 +118,91 @@ class Products extends Connection implements crudProducts {
 
         if($stmt->execute()) {
             $_SESSION['success'] = "Cadastrado com sucesso!";
-            $destiny = header('Location: ../../public/products.php');
+            $destiny = header('Location: ../../public/home.php');
         } else {
             $_SESSION['error'] = "Ocorreu um erro no cadastro do produto!";
-            $destiny = header('Location: ../../public/products.php');
+            $destiny = header('Location: ../../public/home.php');
         }
 
     }
     public function read() {
+        $connection = $this->connect();
 
+        $sql = "select * from products";
+        $stmt = $connection->prepare($sql);
+        $stmt->execute();
+
+        $result = $stmt->fetchAll();
+        
+        foreach($result as $values) {
+            $this->setId($values['id']);
+            $this->setName($values['name']);
+            $this->setQuantity($values['quantity']);
+            $this->setPrice($values['price']);
+            $this->setImage($values['image']);
+
+            $_id = $this->getId();
+            $_name = $this->getName();
+            $_quantity = $this->getQuantity();
+            $_price = number_format($this->getPrice(), 2, ',', '.');
+            $_image = $this->getImage();
+
+            echo "<tr>";
+            echo "<td><img width=\"30\" src=\"../assets/images/upload/$_image\"></td>";
+            echo "<td>$_name</td>";
+            echo "<td>$_quantity</td>";
+            echo "<td>R$ $_price</td>";
+            echo "<td><a href=\"edit-product.php?id=$_id\" class=\"btn btn-link btn-sm\">Editar</a></td>";
+            echo "<td><a href=\"delete-product.php?id=$_id\" class=\"btn btn-link btn-sm\">Excluir</a></td>";
+            echo "<td><a href=\"add-sale.php?id=$_id\" class=\"btn btn-link btn-sm\">Incluir na venda</a></td>";
+            echo "</tr>";
+        }
     }
     public function update($id, $name, $quantity, $price, $image) {
+        $connection = $this->connect();
 
+        $this->setId($id);
+        $this->setName($name);
+        $this->setQuantity($quantity);
+        $this->setPrice($price);
+        $this->setImage($image);
+
+        $id = $this->getId();
+        $name = $this->getName();
+        $quantity = $this->getQuantity();
+        $price = $this->getPrice();
+        $image = $this->getImage();
+
+        if($image['name'] != "") {
+            $image = $this->upload($image);
+
+            $sql = "update products set name = :name, quantity = :quantity, price = :price, image = :image where id = :id";
+            $stmt = $connection->prepare($sql);
+
+            $stmt->bindParam(':id', $id);
+            $stmt->bindParam(':name', $name);
+            $stmt->bindParam(':quantity', $quantity);
+            $stmt->bindParam(':price', $price);
+            $stmt->bindParam(':image', $image);
+
+            $stmt->execute();
+
+            $_SESSION['success'] = "Atualizado com sucesso!";
+            $destiny = header("Location: ../../public/home.php");
+        } else {
+            $sql = "update products set name = :name, quantity = :quantity, price = :price where id = :id";
+            $stmt = $connection->prepare($sql);
+
+            $stmt->bindParam(':id', $id);
+            $stmt->bindParam(':name', $name);
+            $stmt->bindParam(':quantity', $quantity);
+            $stmt->bindParam(':price', $price);
+
+            $stmt->execute();
+
+            $_SESSION['success'] = "Atualizado com sucesso!";
+            $destiny = header("Location: ../../public/home.php");
+        }
     }
     public function delete($id) {
 
