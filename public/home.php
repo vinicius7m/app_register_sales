@@ -1,4 +1,5 @@
 <?php 
+
 require_once '../includes/header.php';
 require_once '../classes/autoload.php';
 ?>
@@ -7,13 +8,13 @@ require_once '../classes/autoload.php';
 <?php 
   if(isset($_SESSION['success'])) {
       echo '<p class="alert alert-success">';
-          echo $_SESSION['success'];
-        unset($_SESSION['success']);
+        echo $_SESSION['success'];
+      unset($_SESSION['success']);
       echo '</p>';
   } elseif(isset($_SESSION['error'])) {
       echo '<p class="alert alert-danger">';
-          echo $_SESSION['error'];
-          unset($_SESSION['error']);
+        echo $_SESSION['error'];
+        unset($_SESSION['error']);
       echo '</p>';
   } 
 ?>
@@ -30,7 +31,6 @@ require_once '../classes/autoload.php';
   </thead>
   <tbody>
     <?php
-
         require_once '../database/products/read.php';
     ?>
   </tbody>

@@ -153,7 +153,7 @@ class Products extends Connection implements crudProducts {
             echo "<td>$_quantity</td>";
             echo "<td>R$ $_price</td>";
             echo "<td><a href=\"edit-product.php?id=$_id\" class=\"btn btn-link btn-sm\">Editar</a></td>";
-            echo "<td><a href=\"delete-product.php?id=$_id\" class=\"btn btn-link btn-sm\">Excluir</a></td>";
+            echo "<td><a href=\"../database/products/delete.php?id=$_id\" class=\"btn btn-link btn-sm\">Excluir</a></td>";
             echo "<td><a href=\"add-sale.php?id=$_id\" class=\"btn btn-link btn-sm\">Incluir na venda</a></td>";
             echo "</tr>";
         }
@@ -205,6 +205,16 @@ class Products extends Connection implements crudProducts {
         }
     }
     public function delete($id) {
+        $connection =  $this->connect();
+        
+        $this->setId($id);
+        $_id = $this->getId();
 
+        $sql = "delete from products where id = :id";
+        $stmt = $connection->prepare($sql);
+        $stmt->bindParam(':id', $_id);
+        $stmt->execute();
+
+        $destiny = header('Location: ../../public/home.php');
     }
 }
