@@ -146,16 +146,29 @@ class Products extends Connection implements crudProducts {
             $_quantity = $this->getQuantity();
             $_price = number_format($this->getPrice(), 2, ',', '.');
             $_image = $this->getImage();
-
-            echo "<tr>";
-            echo "<td><img width=\"30\" src=\"../assets/images/upload/$_image\"></td>";
-            echo "<td>$_name</td>";
-            echo "<td>$_quantity</td>";
-            echo "<td>R$ $_price</td>";
-            echo "<td><a href=\"edit-product.php?id=$_id\" class=\"btn btn-link btn-sm\">Editar</a></td>";
-            echo "<td><a href=\"../database/products/delete.php?id=$_id\" class=\"btn btn-link btn-sm\">Excluir</a></td>";
-            echo "<td><a href=\"add-sale.php?id=$_id\" class=\"btn btn-link btn-sm\">Incluir na venda</a></td>";
-            echo "</tr>";
+            
+            if($_image == null) {
+                echo "<tr>";
+                echo "<td>Imagem não disponível</td>";
+                echo "<td>$_name</td>";
+                echo "<td>$_quantity</td>";
+                echo "<td>R$ $_price</td>";
+                echo "<td><a href=\"edit-product.php?id=$_id\" class=\"btn btn-link btn-sm\"><i class=\"fa fa-pencil\" aria-hidden=\"true\"></i> Editar</a></td>";
+                echo "<td><a href=\"../database/products/delete.php?id=$_id\" class=\"btn btn-link btn-sm\"><i class=\"fa fa-trash\" aria-hidden=\"true\"></i> Excluir</a></td>";
+                echo "<td><a href=\"products.php\" class=\"btn btn-link btn-sm\"><i class=\"fa fa-user-plus\" aria-hidden=\"true\"></i> Cadastrar produto</a></td>";
+                echo "</tr>";
+            } else {
+                echo "<tr>";
+                echo "<td><img width=\"30\" src=\"../assets/images/upload/$_image\"></td>";
+                echo "<td>$_name</td>";
+                echo "<td>$_quantity</td>";
+                echo "<td>R$ $_price</td>";
+                echo "<td><a href=\"edit-product.php?id=$_id\" class=\"btn btn-link btn-sm\"><i class=\"fa fa-pencil\" aria-hidden=\"true\"></i> Editar</a></td>";
+                echo "<td><a href=\"../database/products/delete.php?id=$_id\" class=\"btn btn-link btn-sm\"><i class=\"fa fa-trash\" aria-hidden=\"true\"></i> Excluir</a></td>";
+                echo "<td><a href=\"products.php\" class=\"btn btn-link btn-sm\"><i class=\"fa fa-user-plus\" aria-hidden=\"true\"></i> Cadastrar produto</a></td>";
+                echo "</tr>";        
+            }
+            
         }
     }
     public function update($id, $name, $quantity, $price, $image) {

@@ -19,7 +19,7 @@ require_once '../classes/autoload.php';
   } 
 ?>
 
-<table class="table table-hover table-responsive">
+<table class="table table-responsive table-hover">
   <thead>
     <tr>
       <th scope="col">Preview</th>
