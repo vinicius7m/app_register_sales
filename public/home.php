@@ -5,6 +5,8 @@ require_once '../classes/autoload.php';
 ?>
 <h4>Tabela de produtos</h4><hr>
 
+<a href="products.php" class="btn btn-link btn-sm"><i class="fa fa-user-plus" aria-hidden="true"></i> Cadastrar produto</a>
+
 <?php 
   if(isset($_SESSION['success'])) {
       echo '<p class="alert alert-success">';

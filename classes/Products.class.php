@@ -155,7 +155,6 @@ class Products extends Connection implements crudProducts {
                 echo "<td>R$ $_price</td>";
                 echo "<td><a href=\"edit-product.php?id=$_id\" class=\"btn btn-link btn-sm\"><i class=\"fa fa-pencil\" aria-hidden=\"true\"></i> Editar</a></td>";
                 echo "<td><a href=\"../database/products/delete.php?id=$_id\" class=\"btn btn-link btn-sm\"><i class=\"fa fa-trash\" aria-hidden=\"true\"></i> Excluir</a></td>";
-                echo "<td><a href=\"products.php\" class=\"btn btn-link btn-sm\"><i class=\"fa fa-user-plus\" aria-hidden=\"true\"></i> Cadastrar produto</a></td>";
                 echo "</tr>";
             } else {
                 echo "<tr>";
@@ -165,7 +164,7 @@ class Products extends Connection implements crudProducts {
                 echo "<td>R$ $_price</td>";
                 echo "<td><a href=\"edit-product.php?id=$_id\" class=\"btn btn-link btn-sm\"><i class=\"fa fa-pencil\" aria-hidden=\"true\"></i> Editar</a></td>";
                 echo "<td><a href=\"../database/products/delete.php?id=$_id\" class=\"btn btn-link btn-sm\"><i class=\"fa fa-trash\" aria-hidden=\"true\"></i> Excluir</a></td>";
-                echo "<td><a href=\"products.php\" class=\"btn btn-link btn-sm\"><i class=\"fa fa-user-plus\" aria-hidden=\"true\"></i> Cadastrar produto</a></td>";
+                
                 echo "</tr>";        
             }
             
